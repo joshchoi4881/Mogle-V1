@@ -1,0 +1,71 @@
+#profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#profileInfo {
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    height: auto;
+    border: 2px solid black;
+}
+#imageContainer img {
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+}
+#infoContainer {
+    max-width: 400px;
+    margin: 10px;
+}
+#network {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    height: auto;
+    border: 2px solid black;
+}
+#changeStatusButton {
+    margin: 10px;
+}
+#followers {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.followerListItem {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    height: 120px;
+    margin: 5px;
+}
+.followerListItem img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+#following {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.followingListItem {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    height: 120px;
+    margin: 5px;
+}
+.followingListItem img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+.iconInfo {
+    width: 200px;
+    padding: 10px;
+    text-align: left;
+}

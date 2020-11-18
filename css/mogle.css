@@ -1,0 +1,259 @@
+/* Body */
+body {
+  background-color: #f5f5f5;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background-color: #dda1a2;
+  border-bottom: 2px solid gray;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + section {
+  padding-top: 106px;
+}
+
+/* Nav */
+a > #logo {
+  display: flex;
+  justify-content: center;
+}
+#logo {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+}
+#info {
+  margin-right: auto;
+  margin-bottom: auto;
+}
+#info a {
+  margin: 0px 5px;
+  border-radius: 25px;
+  padding: 5px;
+  color: #000;
+}
+#info a:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #800000;
+}
+#account {
+  margin-left: auto;
+  margin-bottom: auto;
+}
+#account a {
+  margin: 0px 5px;
+  border-radius: 25px;
+  padding: 5px;
+  color: #000;
+}
+#account a:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #800000;
+}
+nav {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+nav a {
+  margin: 0px 5px;
+  border-radius: 25px;
+  padding: 5px;
+  color: #000;
+}
+nav a:hover {
+  text-decoration: none;
+  color: white;
+  background-color: #800000;
+}
+
+/* Section */
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Subtopics */
+.subtopics {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.subtopic {
+  margin-top: 20px;
+  border-radius: 10%;
+  padding: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+.subtopic:hover {
+  text-decoration: none;
+  background-color: #d4af37;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+input:checked + .slider {
+  background-color: #2196f3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Cards */
+.card {
+  margin: 30px 15%;
+  padding: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+.card:hover {
+  border-radius: 10%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Rideshare */
+.chart-container {
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+/* Schedule */
+.scheduleGigs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.gigs {
+  margin: auto;
+}
+table {
+  display: flex;
+  flex-direction: column;
+}
+tr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+th,
+td {
+  border: 1px solid #808080;
+  border-collapse: collapse;
+  flex: 1 1 50px;
+}
+.block {
+  font-size: 12px;
+  min-width: 75px;
+  min-height: 30px;
+}
+.cell {
+  border-radius: 10%;
+}
+.cell:hover {
+  box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* Misc */
+.submitForm input {
+  color: #000;
+  margin: 0px 5px;
+  border-radius: 25px;
+  padding: 5px;
+}
+.submitForm input:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #d4af37;
+}
+.left {
+  text-align: left;
+}
+.center {
+  text-align: center;
+}
+p,
+a {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+}
+strong {
+  color: maroon;
+}
+small {
+  color: #808080;
+}
+.tab {
+  text-indent: 4em;
+}

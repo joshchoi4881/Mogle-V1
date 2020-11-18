@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-138974831-2"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-138974831-2");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="description"
+      content="Maximizing Human Capital in the Gig Economy"
+    />
+    <meta name="keywords" content="Mogle, Gig Economy, Human Capital" />
+    <meta name="author" content="Josh Choi" />
+    <link rel="stylesheet" type="text/css" href="css/mogle.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <style>
+      .chart-container {
+        width: 640px;
+        height: auto;
+      }
+    </style>
+    <title>Mogle</title>
+  </head>
+  <body>
+    <div class="chart-container">
+      <h1>Manhattan, New York</h1>
+      <canvas id="manhattanNewYork"></canvas>
+      <h1>Princeton, New Jersey</h1>
+      <canvas id="princetonNewJersey"></canvas>
+      <h1>Philadelphia, Pennsylvania</h1>
+      <canvas id="philadelphiaPennsylvania"></canvas>
+      <h1>Minneapolis, Minnesota</h1>
+      <canvas id="minneapolisMinnesota"></canvas>
+      <h1>Delray Beach, Florida</h1>
+      <canvas id="delrayBeachFlorida"></canvas>
+      <h1>Dallas, Texas</h1>
+      <canvas id="dallasTexas"></canvas>
+      <h1>Combined</h1>
+      <canvas id="combined"></canvas>
+    </div>
+    <script>
+      $(document).ready(function() {
+        $.ajax({
+          url: "/mogle/graphs/data.php",
+          type: "GET",
+          success: function(data) {
+            console.log(data);
+
+            // Batch 1
+            var hourManhattanNewYork = [];
+            var uberManhattanNewYork = [];
+            var lyftManhattanNewYork = [];
+            var hourPrincetonNewJersey = [];
+            var uberPrincetonNewJersey = [];
+            var lyftPrincetonNewJersey = [];
+            var hourPhiladelphiaPennsylvania = [];
+            var uberPhiladelphiaPennsylvania = [];
+            var lyftPhiladelphiaPennsylvania = [];
+            for (var i in data[0]) {
+              hourManhattanNewYork.push(
+                data[0][i].dayOfWeek + ", " + data[0][i].hour + ":00"
+              );
+              uberManhattanNewYork.push(data[0][i].average);
+              lyftManhattanNewYork.push(data[1][i].average);
+            }
+            for (var i in data[2]) {
+              hourPrincetonNewJersey.push(
+                data[2][i].dayOfWeek + ", " + data[2][i].hour + ":00"
+              );
+              uberPrincetonNewJersey.push(data[2][i].average);
+              lyftPrincetonNewJersey.push(data[3][i].average);
+            }
+            for (var i in data[4]) {
+              hourPhiladelphiaPennsylvania.push(
+                data[4][i].dayOfWeek + ", " + data[4][i].hour + ":00"
+              );
+              uberPhiladelphiaPennsylvania.push(data[4][i].average);
+              lyftPhiladelphiaPennsylvania.push(data[5][i].average);
+            }
+            var chartManhattanNewYork = {
+              labels: hourManhattanNewYork,
+              datasets: [
+                {
+                  label: "Uber, Manhattan",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(59, 89, 152, 0.75)",
+                  borderColor: "rgba(59, 89, 152, 1)",
+                  pointHoverBackgroundColor: "rgba(59, 89, 152, 0.75)",
+                  pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+                  data: uberManhattanNewYork
+                },
+                {
+                  label: "Lyft, Manhattan",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(29, 202, 255, 0.75)",
+                  borderColor: "rgba(29, 202, 255, 1)",
+                  pointHoverBackgroundColor: "rgba(29, 202, 255, 0.75)",
+                  pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+                  data: lyftManhattanNewYork
+                }
+              ]
+            };
+            var chartPrincetonNewJersey = {
+              labels: hourPrincetonNewJersey,
+              datasets: [
+                {
+                  label: "Uber, Princeton",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(110, 44, 0, 0.75)",
+                  borderColor: "rgba(110, 44, 0, 1)",
+                  pointHoverBackgroundColor: "rgba(110, 44, 0, 0.75)",
+                  pointHoverBorderColor: "rgba(110, 44, 0, 1)",
+                  data: uberPrincetonNewJersey
+                },
+                {
+                  label: "Lyft, Princeton",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(237, 187, 153, 0.75)",
+                  borderColor: "rgba(237, 187, 153, 1)",
+                  pointHoverBackgroundColor: "rgba(237, 187, 153, 0.75)",
+                  pointHoverBorderColor: "rgba(237, 187, 153, 1)",
+                  data: lyftPrincetonNewJersey
+                }
+              ]
+            };
+            var chartPhiladelphiaPennsylvania = {
+              labels: hourPhiladelphiaPennsylvania,
+              datasets: [
+                {
+                  label: "Uber, Philadelphia",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(20, 90, 50, 0.75)",
+                  borderColor: "rgba(20, 90, 50, 1)",
+                  pointHoverBackgroundColor: "rgba(20, 90, 50, 0.75)",
+                  pointHoverBorderColor: "rgba(20, 90, 50, 1)",
+                  data: uberPhiladelphiaPennsylvania
+                },
+                {
+                  label: "Lyft, Philadelphia",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(169, 223, 191, 0.75)",
+                  borderColor: "rgba(169, 223, 191, 1)",
+                  pointHoverBackgroundColor: "rgba(169, 223, 191, 0.75)",
+                  pointHoverBorderColor: "rgba(169, 223, 191, 1)",
+                  data: lyftPhiladelphiaPennsylvania
+                }
+              ]
+            };
+            var manhattanNewYork = $("#manhattanNewYork");
+            var princetonNewJersey = $("#princetonNewJersey");
+            var philadelphiaPennsylvania = $("#philadelphiaPennsylvania");
+            var graphManhattanNewYork = new Chart(manhattanNewYork, {
+              type: "line",
+              data: chartManhattanNewYork
+            });
+            var graphPrincetonNewJersey = new Chart(princetonNewJersey, {
+              type: "line",
+              data: chartPrincetonNewJersey
+            });
+            var graphPhiladelphiaPennsylvania = new Chart(
+              philadelphiaPennsylvania,
+              {
+                type: "line",
+                data: chartPhiladelphiaPennsylvania
+              }
+            );
+            // Batch 2
+            var hourMinneapolisMinnesota = [];
+            var uberMinneapolisMinnesota = [];
+            var lyftMinneapolisMinnesota = [];
+            var hourDelrayBeachFlorida = [];
+            var uberDelrayBeachFlorida = [];
+            var lyftDelrayBeachFlorida = [];
+            var hourDallasTexas = [];
+            var uberDallasTexas = [];
+            var lyftDallasTexas = [];
+            for (var i in data[0]) {
+              hourMinneapolisMinnesota.push(
+                data[6][i].dayOfWeek + ", " + data[6][i].hour + ":00"
+              );
+              uberMinneapolisMinnesota.push(data[6][i].average);
+              lyftMinneapolisMinnesota.push(data[7][i].average);
+            }
+            for (var i in data[2]) {
+              hourDelrayBeachFlorida.push(
+                data[8][i].dayOfWeek + ", " + data[8][i].hour + ":00"
+              );
+              uberDelrayBeachFlorida.push(data[8][i].average);
+              lyftDelrayBeachFlorida.push(data[9][i].average);
+            }
+            for (var i in data[4]) {
+              hourDallasTexas.push(
+                data[10][i].dayOfWeek + ", " + data[10][i].hour + ":00"
+              );
+              uberDallasTexas.push(data[10][i].average);
+              lyftDallasTexas.push(data[11][i].average);
+            }
+            var chartMinneapolisMinnesota = {
+              labels: hourMinneapolisMinnesota,
+              datasets: [
+                {
+                  label: "Uber, Minneapolis",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(203, 67, 53, 0.75)",
+                  borderColor: "rgba(203, 67, 53, 1)",
+                  pointHoverBackgroundColor: "rgba(203, 67, 53, 0.75)",
+                  pointHoverBorderColor: "rgba(203, 67, 53, 1)",
+                  data: uberMinneapolisMinnesota
+                },
+                {
+                  label: "Lyft, Minneapolis",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(241, 148, 138, 0.75)",
+                  borderColor: "rgba(241, 148, 138, 1)",
+                  pointHoverBackgroundColor: "rgba(241, 148, 138, 0.75)",
+                  pointHoverBorderColor: "rgba(241, 148, 138, 1)",
+                  data: lyftMinneapolisMinnesota
+                }
+              ]
+            };
+            var chartDelrayBeachFlorida = {
+              labels: hourDelrayBeachFlorida,
+              datasets: [
+                {
+                  label: "Uber, Delray Beach",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(108, 52, 131, 0.75)",
+                  borderColor: "rgba(108, 52, 131, 1)",
+                  pointHoverBackgroundColor: "rgba(108, 52, 131, 0.75)",
+                  pointHoverBorderColor: "rgba(108, 52, 131, 1)",
+                  data: uberDelrayBeachFlorida
+                },
+                {
+                  label: "Lyft, Delray Beach",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(187, 143, 206, 0.75)",
+                  borderColor: "rgba(187, 143, 206, 1)",
+                  pointHoverBackgroundColor: "rgba(187, 143, 206, 0.75)",
+                  pointHoverBorderColor: "rgba(187, 143, 206, 1)",
+                  data: lyftDelrayBeachFlorida
+                }
+              ]
+            };
+            var chartDallasTexas = {
+              labels: hourDallasTexas,
+              datasets: [
+                {
+                  label: "Uber, Dallas",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(183, 149, 11, 0.75)",
+                  borderColor: "rgba(183, 149, 11, 1)",
+                  pointHoverBackgroundColor: "rgba(183, 149, 11, 0.75)",
+                  pointHoverBorderColor: "rgba(183, 149, 11, 1)",
+                  data: uberDallasTexas
+                },
+                {
+                  label: "Lyft, Dallas",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(244, 208, 63, 0.75)",
+                  borderColor: "rgba(244, 208, 63, 1)",
+                  pointHoverBackgroundColor: "rgba(244, 208, 63, 0.75)",
+                  pointHoverBorderColor: "rgba(244, 208, 63, 1)",
+                  data: lyftDallasTexas
+                }
+              ]
+            };
+            var minneapolisMinnesota = $("#minneapolisMinnesota");
+            var delrayBeachFlorida = $("#delrayBeachFlorida");
+            var dallasTexas = $("#dallasTexas");
+            var graphMinneapolisMinnesota = new Chart(minneapolisMinnesota, {
+              type: "line",
+              data: chartMinneapolisMinnesota
+            });
+            var graphDelrayBeachFlorida = new Chart(delrayBeachFlorida, {
+              type: "line",
+              data: chartDelrayBeachFlorida
+            });
+            var graphDallasTexas = new Chart(dallasTexas, {
+              type: "line",
+              data: chartDallasTexas
+            });
+            // Combined
+            var chartCombined = {
+              labels: hourManhattanNewYork,
+              datasets: [
+                {
+                  label: "Uber, Manhattan",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(59, 89, 152, 0.75)",
+                  borderColor: "rgba(59, 89, 152, 1)",
+                  pointHoverBackgroundColor: "rgba(59, 89, 152, 0.75)",
+                  pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+                  data: uberManhattanNewYork
+                },
+                {
+                  label: "Lyft, Manhattan",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(29, 202, 255, 0.75)",
+                  borderColor: "rgba(29, 202, 255, 1)",
+                  pointHoverBackgroundColor: "rgba(29, 202, 255, 0.75)",
+                  pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+                  data: lyftManhattanNewYork
+                },
+                {
+                  label: "Uber, Princeton",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(110, 44, 0, 0.75)",
+                  borderColor: "rgba(110, 44, 0, 1)",
+                  pointHoverBackgroundColor: "rgba(110, 44, 0, 0.75)",
+                  pointHoverBorderColor: "rgba(110, 44, 0, 1)",
+                  data: uberPrincetonNewJersey
+                },
+                {
+                  label: "Lyft, Princeton",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(237, 187, 153, 0.75)",
+                  borderColor: "rgba(237, 187, 153, 1)",
+                  pointHoverBackgroundColor: "rgba(237, 187, 153, 0.75)",
+                  pointHoverBorderColor: "rgba(237, 187, 153, 1)",
+                  data: lyftPrincetonNewJersey
+                },
+                {
+                  label: "Uber, Philadelphia",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(20, 90, 50, 0.75)",
+                  borderColor: "rgba(20, 90, 50, 1)",
+                  pointHoverBackgroundColor: "rgba(20, 90, 50, 0.75)",
+                  pointHoverBorderColor: "rgba(20, 90, 50, 1)",
+                  data: uberPhiladelphiaPennsylvania
+                },
+                {
+                  label: "Lyft, Philadelphia",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(169, 223, 191, 0.75)",
+                  borderColor: "rgba(169, 223, 191, 1)",
+                  pointHoverBackgroundColor: "rgba(169, 223, 191, 0.75)",
+                  pointHoverBorderColor: "rgba(169, 223, 191, 1)",
+                  data: lyftPhiladelphiaPennsylvania
+                },
+                {
+                  label: "Uber, Minneapolis",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(203, 67, 53, 0.75)",
+                  borderColor: "rgba(203, 67, 53, 1)",
+                  pointHoverBackgroundColor: "rgba(203, 67, 53, 0.75)",
+                  pointHoverBorderColor: "rgba(203, 67, 53, 1)",
+                  data: uberMinneapolisMinnesota
+                },
+                {
+                  label: "Lyft, Minneapolis",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(241, 148, 138, 0.75)",
+                  borderColor: "rgba(241, 148, 138, 1)",
+                  pointHoverBackgroundColor: "rgba(241, 148, 138, 0.75)",
+                  pointHoverBorderColor: "rgba(241, 148, 138, 1)",
+                  data: lyftMinneapolisMinnesota
+                },
+                {
+                  label: "Uber, Delray Beach",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(108, 52, 131, 0.75)",
+                  borderColor: "rgba(108, 52, 131, 1)",
+                  pointHoverBackgroundColor: "rgba(108, 52, 131, 0.75)",
+                  pointHoverBorderColor: "rgba(108, 52, 131, 1)",
+                  data: uberDelrayBeachFlorida
+                },
+                {
+                  label: "Lyft, Delray Beach",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(187, 143, 206, 0.75)",
+                  borderColor: "rgba(187, 143, 206, 1)",
+                  pointHoverBackgroundColor: "rgba(187, 143, 206, 0.75)",
+                  pointHoverBorderColor: "rgba(187, 143, 206, 1)",
+                  data: lyftDelrayBeachFlorida
+                },
+                {
+                  label: "Uber, Dallas",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(183, 149, 11, 0.75)",
+                  borderColor: "rgba(183, 149, 11, 1)",
+                  pointHoverBackgroundColor: "rgba(183, 149, 11, 0.75)",
+                  pointHoverBorderColor: "rgba(183, 149, 11, 1)",
+                  data: uberDallasTexas
+                },
+                {
+                  label: "Lyft, Dallas",
+                  fill: false,
+                  lineTension: 0.1,
+                  backgroundColor: "rgba(244, 208, 63, 0.75)",
+                  borderColor: "rgba(244, 208, 63, 1)",
+                  pointHoverBackgroundColor: "rgba(244, 208, 63, 0.75)",
+                  pointHoverBorderColor: "rgba(244, 208, 63, 1)",
+                  data: lyftDallasTexas
+                }
+              ]
+            };
+            var combined = $("#combined");
+            var graphCombined = new Chart(combined, {
+              type: "line",
+              data: chartCombined
+            });
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
