@@ -1,5 +1,5 @@
-# Mogle
-Mogle
+# Mogle V1 Production
+Mogle V1 Production
 
 # AJAX
 Contains PHP scripts to allow client to communicate with the MySQL database through AJAX
