@@ -1,0 +1,7 @@
+.env
+vendor
+node_modules
+
+differences.txt
+.env_xampp
+.env_ec2
